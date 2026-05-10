@@ -76,26 +76,24 @@ Desarrollar una aplicación móvil para Android que permita visualizar mascotas 
 
 # Diseño del Sistema
 
-## Pantallas Principales
-
-### Pantalla de Inicio de Sesión
+## Pantalla de Inicio de Sesión
 - Inicio de sesión
 - Registro de usuarios
 
-### Pantalla Principal
+## Pantalla Principal
 - Lista de mascotas
 - Barra de búsqueda
 
-### Pantalla de Detalle
+## Pantalla de Detalle
 - Fotografías
 - Información completa
 - Botón de favoritos
 
-### Pantalla de Publicación
+## Pantalla de Publicación
 - Registro de mascotas
 - Subida de imágenes
 
-### Pantalla de Perfil
+## Pantalla de Perfil
 - Información del usuario
 - Mascotas favoritas
 
