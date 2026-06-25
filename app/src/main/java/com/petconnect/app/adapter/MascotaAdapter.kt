@@ -16,33 +16,42 @@ class MascotaAdapter(
 ) : RecyclerView.Adapter<MascotaAdapter.MascotaViewHolder>() {
 
     class MascotaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivMascota: ImageView = itemView.findViewById(R.id.ivMascota)
-        val tvNombre: TextView = itemView.findViewById(R.id.tvNombre)
-        val tvEspecie: TextView = itemView.findViewById(R.id.tvEspecie)
-        val tvRaza: TextView = itemView.findViewById(R.id.tvRaza)
-        val tvEdad: TextView = itemView.findViewById(R.id.tvEdad)
+        val ivMascota: ImageView = itemView.findViewById(R.id.ivMascotaItem)
+        val tvNombre: TextView = itemView.findViewById(R.id.tvNombreItem)
+        val tvEspecie: TextView = itemView.findViewById(R.id.tvEspecieItem)
+        val tvRazaEdad: TextView = itemView.findViewById(R.id.tvRazaEdadItem)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MascotaViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MascotaViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_mascota, parent, false)
+
         return MascotaViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MascotaViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: MascotaViewHolder,
+        position: Int
+    ) {
         val mascota = mascotas[position]
 
         holder.tvNombre.text = mascota.nombre
         holder.tvEspecie.text = mascota.especie
-        holder.tvRaza.text = mascota.raza
-        holder.tvEdad.text = mascota.edad
+        holder.tvRazaEdad.text = "${mascota.raza} · ${mascota.edad}"
 
-        // Cargar imagen usando Coil
         if (mascota.imageUrl.isNotEmpty()) {
             holder.ivMascota.load(mascota.imageUrl) {
                 crossfade(true)
                 placeholder(android.R.drawable.ic_menu_gallery)
+                error(android.R.drawable.ic_menu_gallery)
             }
+        } else {
+            holder.ivMascota.setImageResource(
+                android.R.drawable.ic_menu_myplaces
+            )
         }
 
         holder.itemView.setOnClickListener {
@@ -50,13 +59,12 @@ class MascotaAdapter(
         }
     }
 
-    override fun getItemCount() = mascotas.size
+    override fun getItemCount(): Int {
+        return mascotas.size
+    }
 
-    // ESTE ES EL MÉTODO QUE FALTABA
     fun updateList(newList: List<Mascota>) {
-        println("🔄 DEBUG Adapter: Actualizando lista. Nueva cantidad: ${newList.size}")
         mascotas = newList
         notifyDataSetChanged()
-        println("✅ DEBUG Adapter: notifyDataSetChanged() llamado")
     }
 }

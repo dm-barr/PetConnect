@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.petconnect.app.adapter.MascotaAdapter
 import com.petconnect.app.viewmodel.MascotaViewModel
 
@@ -25,20 +25,22 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MascotaViewModel::class.java]
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewMascotas)
-        val etSearch = findViewById<EditText>(R.id.etSearch)
+        val etSearch = findViewById<TextInputEditText>(R.id.etSearch)
         val btnProfile = findViewById<ImageButton>(R.id.btnProfile)
-        val btnIrAPublicar = findViewById<Button>(R.id.btnIrAPublicar)
+        val btnIrAPublicar = findViewById<MaterialButton>(R.id.btnIrAPublicar)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MascotaAdapter(emptyList()) { mascota ->
-            val intent = Intent(this, DetalleActivity::class.java)
-            intent.putExtra("id", mascota.id)
-            intent.putExtra("nombre", mascota.nombre)
-            intent.putExtra("especie", mascota.especie)
-            intent.putExtra("raza", mascota.raza)
-            intent.putExtra("edad", mascota.edad)
-            intent.putExtra("descripcion", mascota.descripcion)
-            intent.putExtra("imageUrl", mascota.imageUrl)
+            val intent = Intent(this, DetalleActivity::class.java).apply {
+                putExtra("id", mascota.id)
+                putExtra("nombre", mascota.nombre)
+                putExtra("especie", mascota.especie)
+                putExtra("raza", mascota.raza)
+                putExtra("edad", mascota.edad)
+                putExtra("descripcion", mascota.descripcion)
+                putExtra("imageUrl", mascota.imageUrl)
+                putExtra("refugioId", mascota.refugioId)
+            }
             startActivity(intent)
         }
         recyclerView.adapter = adapter

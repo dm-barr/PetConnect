@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Paleta estilo flight app -->
+    <color name="navy_dark">#0F2144</color>
+    <color name="navy_text_hint">#7FA8C9</color>
+    <color name="teal_accent">#3DB38A</color>
+    <color name="input_background">#F4F8FC</color>
+    <color name="input_stroke">#DCE8F4</color>
+    <color name="input_hint">#B0C4D8</color>
+    <color name="divider">#DCE8F4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="navy_medium">#1a3a6a</color>
+    <color name="overlay_dark">#66000000</color>
+    <color name="text_body">#4a6080</color>
+    <color name="black">#000</color>
+    <color name="danger_text">#C0392B</color>
+    <color name="danger_stroke">#F0C0BC</color>
 </resources>

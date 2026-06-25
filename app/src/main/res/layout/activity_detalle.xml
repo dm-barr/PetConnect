@@ -1,136 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/navy_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Imagen grande de la mascota -->
-        <ImageView
-            android:id="@+id/ivMascotaGrande"
+        <!-- Imagen grande de la mascota con botón favorito superpuesto -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            android:background="#E0E0E0"/>
+            android:layout_height="280dp"
+            android:layout_marginTop="24dp">
 
-        <!-- Contenedor de información -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            <!-- Botón favorito -->
 
-            <!-- Nombre y botón de favoritos -->
-            <LinearLayout
+            <ImageView
+                android:id="@+id/ivMascotaGrande"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp">
+                android:layout_height="280dp"
+                android:layout_gravity="center"
+                android:background="@color/navy_medium"
+                android:scaleType="centerCrop" />
 
-                <TextView
-                    android:id="@+id/tvNombreDetalle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Nombre"
-                    android:textSize="28sp"
-                    android:textStyle="bold"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="14dp"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/overlay_dark">
 
                 <ImageButton
                     android:id="@+id/btnFavorito"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:src="@android:drawable/btn_star_big_off"
+                    app:tint="@color/white"
                     android:contentDescription="Agregar a favoritos"/>
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
 
-            <!-- Especie y Raza -->
+        <!-- Tarjeta blanca con esquinas superiores redondeadas -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/white">
+
+            <!-- ... resto del layout sin cambios ... -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="32dp">
 
+                <!-- Nombre y badge disponible -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvNombreDetalle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/navy_dark"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disponible"
+                        android:textSize="12sp"
+                        android:textColor="@color/teal_accent"
+                        android:background="@drawable/badge_teal_light"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"/>
+                </LinearLayout>
+
+                <!-- Chips: Especie, Raza, Edad -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+
+                    <!-- Chip Especie -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/input_background"
+                        app:strokeColor="@color/input_stroke"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@android:drawable/ic_menu_myplaces"
+                                app:tint="@color/teal_accent"
+                                android:layout_marginEnd="6dp"
+                                android:contentDescription="Especie"/>
+
+                            <TextView
+                                android:id="@+id/tvEspecieDetalle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perro"
+                                android:textSize="12sp"
+                                android:textColor="@color/navy_dark"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Chip Raza -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/input_background"
+                        app:strokeColor="@color/input_stroke"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@android:drawable/ic_menu_info_details"
+                                app:tint="@color/teal_accent"
+                                android:layout_marginEnd="6dp"
+                                android:contentDescription="Raza"/>
+
+                            <TextView
+                                android:id="@+id/tvRazaDetalle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Labrador"
+                                android:textSize="12sp"
+                                android:textColor="@color/navy_dark"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Chip Edad -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/input_background"
+                        app:strokeColor="@color/input_stroke"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@android:drawable/ic_menu_today"
+                                app:tint="@color/teal_accent"
+                                android:layout_marginEnd="6dp"
+                                android:contentDescription="Edad"/>
+
+                            <TextView
+                                android:id="@+id/tvEdadDetalle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2 años"
+                                android:textSize="12sp"
+                                android:textColor="@color/navy_dark"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- Label Descripción -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Especie: "
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:text="DESCRIPCIÓN"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.08"
+                    android:textColor="@color/navy_text_hint"
+                    android:layout_marginBottom="8dp"/>
 
+                <!-- Texto descripción -->
                 <TextView
-                    android:id="@+id/tvEspecieDetalle"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvDescripcionDetalle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Perro"
-                    android:textSize="16sp"/>
+                    android:text="Descripción de la mascota..."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_body"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginBottom="24dp"/>
+
+                <!-- Botón adopción -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAdoptar"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Solicitar adopción"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/teal_accent"
+                    app:cornerRadius="14dp"/>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Raza: "
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvRazaDetalle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Labrador"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="24dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Edad: "
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tvEdadDetalle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2 años"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-
-            <!-- Descripción -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tvDescripcionDetalle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción de la mascota..."
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"/>
-
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 </ScrollView>

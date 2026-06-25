@@ -1,9 +1,112 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PetConnect" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    <style name="Theme.PetConnect" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/teal_accent</item>
+        <item name="colorPrimaryDark">@color/navy_dark</item>
+        <item name="colorAccent">@color/teal_accent</item>
+
+        <item name="android:statusBarColor">@color/navy_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="android:windowBackground">@color/navy_dark</item>
+
+        <item name="android:textColorPrimary">@color/navy_dark</item>
+        <item name="android:textColorSecondary">@color/navy_text_hint</item>
+        <item name="android:textColorHint">@color/input_hint</item>
     </style>
 
-    <style name="Theme.PetConnect" parent="Base.Theme.PetConnect" />
+    <!-- Botón principal teal -->
+    <style name="Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/teal_accent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/navy_dark</item>
+    </style>
+
+    <!-- Botón secundario con borde -->
+    <style name="Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/input_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/navy_dark</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="backgroundTint">@color/input_background</item>
+    </style>
+
+    <!-- Botón destructivo (cerrar sesión) -->
+    <style name="Button.Danger" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/danger_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/danger_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <!-- Campo de texto estilo flight app -->
+    <style name="EditText.Modern" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="boxStrokeColor">@color/input_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="startIconTint">@color/teal_accent</item>
+        <item name="endIconTint">@color/input_hint</item>
+        <item name="android:textColor">@color/navy_dark</item>
+        <item name="android:textColorHint">@color/input_hint</item>
+    </style>
+
+    <!-- Título principal (pantallas con fondo blanco) -->
+    <style name="Text.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/navy_dark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Label uppercase para campos -->
+    <style name="Text.FieldLabel">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/navy_text_hint</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Subtítulo -->
+    <style name="Text.Subtitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/navy_text_hint</item>
+    </style>
+
+    <!-- Tarjeta blanca con borde sutil -->
+    <style name="Card.Modern" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/input_background</item>
+        <item name="strokeColor">@color/input_stroke</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Tarjeta contenedora principal (blanca, esquinas grandes) -->
+    <style name="Card.Container" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">28dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
 </resources>

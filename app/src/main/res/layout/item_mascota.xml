@@ -3,66 +3,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/input_background"
+    app:strokeColor="@color/input_stroke"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="12dp">
 
-        <!-- Imagen de la mascota -->
-        <ImageView
-            android:id="@+id/ivMascota"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:background="#E0E0E0"/>
+        <!-- Thumbnail mascota -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/navy_dark">
 
-        <!-- Información de la mascota -->
+            <ImageView
+                android:id="@+id/ivMascotaItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:tint="@color/teal_accent"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Info -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="2dp">
+
+                <TextView
+                    android:id="@+id/tvNombreItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nombre"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/navy_dark"/>
+
+                <TextView
+                    android:id="@+id/tvEspecieItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Perro"
+                    android:textSize="11sp"
+                    android:textColor="@color/teal_accent"
+                    android:background="@drawable/badge_teal_light"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tvNombre"
+                android:id="@+id/tvRazaEdadItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvEspecie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Especie"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:id="@+id/tvRaza"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Raza"
-                android:textSize="14sp"
-                android:layout_marginTop="2dp"/>
-
-            <TextView
-                android:id="@+id/tvEdad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edad"
-                android:textSize="14sp"
-                android:layout_marginTop="2dp"/>
-
+                android:text="Labrador · 2 años"
+                android:textSize="12sp"
+                android:textColor="@color/navy_text_hint"/>
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

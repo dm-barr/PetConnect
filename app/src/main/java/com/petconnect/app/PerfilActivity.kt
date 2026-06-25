@@ -2,13 +2,13 @@ package com.petconnect.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.petconnect.app.adapter.MascotaAdapter
@@ -24,46 +24,57 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        val tvNombre = findViewById<TextView>(R.id.tvNombreUsuario)
-        val tvEmail = findViewById<TextView>(R.id.tvEmailUsuario)
+        val tvNombreHeader = findViewById<TextView>(R.id.tvNombreUsuario)
+        val tvEmailHeader = findViewById<TextView>(R.id.tvEmailUsuario)
+        val tvNombreDetalle = findViewById<TextView>(R.id.tvNombreUsuarioDetalle)
+        val tvEmailDetalle = findViewById<TextView>(R.id.tvEmailUsuarioDetalle)
         val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
-        val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
+        val btnCerrarSesion = findViewById<MaterialButton>(R.id.btnCerrarSesion)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewFavoritos)
 
         // Mostrar información del usuario
         val usuario = auth.currentUser
         if (usuario != null) {
-            tvEmail.text = usuario.email ?: "No disponible"
+            val email = usuario.email ?: "No disponible"
+            tvEmailHeader.text = email
+            tvEmailDetalle.text = email
+
             // Intentar obtener el nombre desde Firestore
             db.collection("usuarios").document(usuario.uid)
                 .get()
                 .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val nombre = document.getString("nombre") ?: "Usuario"
-                        tvNombre.text = nombre
+                    val nombre = if (document.exists()) {
+                        document.getString("nombre") ?: "Usuario"
                     } else {
-                        tvNombre.text = "Usuario"
+                        "Usuario"
                     }
+                    tvNombreHeader.text = nombre
+                    tvNombreDetalle.text = nombre
                 }
                 .addOnFailureListener {
-                    tvNombre.text = "Usuario"
+                    tvNombreHeader.text = "Usuario"
+                    tvNombreDetalle.text = "Usuario"
                 }
         } else {
-            tvNombre.text = "No disponible"
-            tvEmail.text = "No disponible"
+            tvNombreHeader.text = "No disponible"
+            tvEmailHeader.text = "No disponible"
+            tvNombreDetalle.text = "No disponible"
+            tvEmailDetalle.text = "No disponible"
         }
 
         // Configurar RecyclerView de favoritos
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MascotaAdapter(emptyList()) { mascota ->
-            val intent = Intent(this, DetalleActivity::class.java)
-            intent.putExtra("id", mascota.id)
-            intent.putExtra("nombre", mascota.nombre)
-            intent.putExtra("especie", mascota.especie)
-            intent.putExtra("raza", mascota.raza)
-            intent.putExtra("edad", mascota.edad)
-            intent.putExtra("descripcion", mascota.descripcion)
-            intent.putExtra("imageUrl", mascota.imageUrl)
+            val intent = Intent(this, DetalleActivity::class.java).apply {
+                putExtra("id", mascota.id)
+                putExtra("nombre", mascota.nombre)
+                putExtra("especie", mascota.especie)
+                putExtra("raza", mascota.raza)
+                putExtra("edad", mascota.edad)
+                putExtra("descripcion", mascota.descripcion)
+                putExtra("imageUrl", mascota.imageUrl)
+                putExtra("refugioId", mascota.refugioId)
+            }
             startActivity(intent)
         }
         recyclerView.adapter = adapter
@@ -80,7 +91,10 @@ class PerfilActivity : AppCompatActivity() {
         btnCerrarSesion.setOnClickListener {
             auth.signOut()
             Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, LoginActivity::class.java))
+            val intent = Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
             finish()
         }
     }
@@ -98,7 +112,6 @@ class PerfilActivity : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
 
-                // Obtener los IDs de las mascotas favoritas
                 val favoritosIds = favoritosSnapshot.mapNotNull { doc ->
                     doc.getString("mascotaId")
                 }
@@ -108,7 +121,6 @@ class PerfilActivity : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
 
-                // Obtener los detalles de las mascotas favoritas
                 db.collection("mascotas")
                     .whereIn("id", favoritosIds)
                     .get()

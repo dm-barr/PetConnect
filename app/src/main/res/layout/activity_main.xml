@@ -1,63 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/navy_dark">
 
-    <!-- Barra superior con título -->
+    <!-- Barra superior -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4CAF50"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="48dp"
+        android:paddingBottom="20dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="PetConnect"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btnProfile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_myplaces"
-            android:contentDescription="Perfil"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bienvenido"
+                android:textSize="12sp"
+                android:textColor="@color/navy_text_hint"
+                android:layout_marginBottom="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PetConnect"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/navy_medium">
+
+            <ImageButton
+                android:id="@+id/btnProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:tint="@color/teal_accent"
+                android:contentDescription="Perfil"/>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <!-- Barra de búsqueda -->
-    <EditText
-        android:id="@+id/etSearch"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Buscar mascotas..."
-        android:padding="12dp"
-        android:layout_margin="16dp"
-        android:background="@android:drawable/edit_text"
-        android:inputType="text"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/navy_medium">
 
-    <!-- Lista de mascotas - IMPORTANTE: layout_height="0dp" y layout_weight="1" -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMascotas"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxBackgroundColor="@color/navy_medium"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:startIconDrawable="@android:drawable/ic_menu_search"
+            app:startIconTint="@color/navy_text_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Buscar mascotas..."
+                android:textColorHint="@color/input_hint"
+                android:textColor="@color/white"
+                android:inputType="text"
+                android:background="@android:color/transparent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Tarjeta blanca con lista y botón -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:background="#F5F5F5"/>
+        app:cardCornerRadius="28dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/white">
 
-    <!-- Botón para publicar -->
-    <Button
-        android:id="@+id/btnIrAPublicar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Publicar Nueva Mascota"
-        android:layout_margin="16dp"
-        android:backgroundTint="#FF9800"
-        android:textColor="#FFFFFF"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MASCOTAS DISPONIBLES"
+                android:textSize="10sp"
+                android:letterSpacing="0.08"
+                android:textColor="@color/navy_text_hint"
+                android:paddingStart="4dp"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Lista de mascotas -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMascotas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"/>
+
+            <!-- Botón publicar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnIrAPublicar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Publicar nueva mascota"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/teal_accent"
+                app:cornerRadius="14dp"
+                app:icon="@android:drawable/ic_input_add"
+                app:iconTint="@color/white"
+                app:iconGravity="textStart"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

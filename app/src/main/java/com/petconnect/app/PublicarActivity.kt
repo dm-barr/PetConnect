@@ -2,12 +2,15 @@ package com.petconnect.app
 
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -20,46 +23,82 @@ class PublicarActivity : AppCompatActivity() {
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    // Esto abre la galería del celular para elegir una foto
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             imagenUri = it
-            findViewById<ImageView>(R.id.ivPreview).setImageURI(it)
+            ivPreview.setImageURI(it)
+            ivPreview.visibility = View.VISIBLE
+            layoutPlaceholder.visibility = View.GONE
         }
     }
+
+    private lateinit var ivPreview: ImageView
+    private lateinit var layoutPlaceholder: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_publicar)
 
-        val etNombre = findViewById<EditText>(R.id.etNombre)
-        val etEspecie = findViewById<EditText>(R.id.etEspecie)
-        val etRaza = findViewById<EditText>(R.id.etRaza)
-        val etEdad = findViewById<EditText>(R.id.etEdad)
-        val etDescripcion = findViewById<EditText>(R.id.etDescripcion)
-        val btnSeleccionar = findViewById<Button>(R.id.btnSeleccionarImagen)
-        val btnPublicar = findViewById<Button>(R.id.btnPublicar)
+        val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
+        ivPreview = findViewById(R.id.ivPreview)
+        layoutPlaceholder = findViewById(R.id.layoutPlaceholder)
+        val etNombre = findViewById<TextInputEditText>(R.id.etNombre)
+        val etEspecie = findViewById<TextInputEditText>(R.id.etEspecie)
+        val etRaza = findViewById<TextInputEditText>(R.id.etRaza)
+        val etEdad = findViewById<TextInputEditText>(R.id.etEdad)
+        val etDescripcion = findViewById<TextInputEditText>(R.id.etDescripcion)
+        val btnPublicar = findViewById<MaterialButton>(R.id.btnPublicar)
 
-        btnSeleccionar.setOnClickListener {
+        // Clic en el área de preview/placeholder abre la galería
+        val abrirGaleria = View.OnClickListener {
             pickImageLauncher.launch("image/*")
+        }
+        ivPreview.setOnClickListener(abrirGaleria)
+        layoutPlaceholder.setOnClickListener(abrirGaleria)
+
+        // Botón volver
+        btnVolver.setOnClickListener {
+            finish()
         }
 
         btnPublicar.setOnClickListener {
-            val nombre = etNombre.text.toString()
-            val especie = etEspecie.text.toString()
-            val raza = etRaza.text.toString()
-            val edad = etEdad.text.toString()
-            val descripcion = etDescripcion.text.toString()
+            val nombre = etNombre.text.toString().trim()
+            val especie = etEspecie.text.toString().trim()
+            val raza = etRaza.text.toString().trim()
+            val edad = etEdad.text.toString().trim()
+            val descripcion = etDescripcion.text.toString().trim()
 
-            // Validar que todo esté lleno
-            if (nombre.isEmpty() || especie.isEmpty() || raza.isEmpty() || edad.isEmpty() || descripcion.isEmpty()) {
-                Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (imagenUri == null) {
-                Toast.makeText(this, "Por favor selecciona una fotografía", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            // Validar campos
+            when {
+                nombre.isEmpty() -> {
+                    etNombre.error = "Ingresa el nombre"
+                    etNombre.requestFocus()
+                    return@setOnClickListener
+                }
+                especie.isEmpty() -> {
+                    etEspecie.error = "Ingresa la especie"
+                    etEspecie.requestFocus()
+                    return@setOnClickListener
+                }
+                raza.isEmpty() -> {
+                    etRaza.error = "Ingresa la raza"
+                    etRaza.requestFocus()
+                    return@setOnClickListener
+                }
+                edad.isEmpty() -> {
+                    etEdad.error = "Ingresa la edad"
+                    etEdad.requestFocus()
+                    return@setOnClickListener
+                }
+                descripcion.isEmpty() -> {
+                    etDescripcion.error = "Ingresa una descripción"
+                    etDescripcion.requestFocus()
+                    return@setOnClickListener
+                }
+                imagenUri == null -> {
+                    Toast.makeText(this, "Por favor selecciona una fotografía", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
             }
 
             // Deshabilitar botón para evitar doble clic
@@ -70,30 +109,40 @@ class PublicarActivity : AppCompatActivity() {
         }
     }
 
-    private fun subirImagenYGuardar(nombre: String, especie: String, raza: String, edad: String, descripcion: String, btnPublicar: Button) {
-        // 1. Subir la imagen a Firebase Storage
+    private fun subirImagenYGuardar(
+        nombre: String,
+        especie: String,
+        raza: String,
+        edad: String,
+        descripcion: String,
+        btnPublicar: MaterialButton
+    ) {
         val ref = storage.reference.child("mascotas/${System.currentTimeMillis()}.jpg")
         ref.putFile(imagenUri!!)
             .addOnSuccessListener {
-                // 2. Si la imagen se subió, obtener su enlace URL
                 ref.downloadUrl.addOnSuccessListener { uri ->
                     val imageUrl = uri.toString()
-
-                    // 3. Guardar los datos en Firestore
                     guardarEnFirestore(nombre, especie, raza, edad, descripcion, imageUrl, btnPublicar)
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error al subir la imagen", Toast.LENGTH_SHORT).show()
                 btnPublicar.isEnabled = true
-                btnPublicar.text = "Publicar Mascota"
+                btnPublicar.text = "Publicar mascota"
             }
     }
 
-    private fun guardarEnFirestore(nombre: String, especie: String, raza: String, edad: String, descripcion: String, imageUrl: String, btnPublicar: Button) {
+    private fun guardarEnFirestore(
+        nombre: String,
+        especie: String,
+        raza: String,
+        edad: String,
+        descripcion: String,
+        imageUrl: String,
+        btnPublicar: MaterialButton
+    ) {
         val refugioId = auth.currentUser?.uid ?: "desconocido"
 
-        // Creamos el objeto Mascota
         val nuevaMascota = Mascota(
             nombre = nombre,
             especie = especie,
@@ -104,17 +153,16 @@ class PublicarActivity : AppCompatActivity() {
             refugioId = refugioId
         )
 
-        // Guardamos en la colección "mascotas"
         db.collection("mascotas")
-            .add(nuevaMascota) // Firebase le asignará un ID automático
+            .add(nuevaMascota)
             .addOnSuccessListener {
                 Toast.makeText(this, "¡Mascota publicada con éxito!", Toast.LENGTH_SHORT).show()
-                finish() // Cierra esta pantalla y vuelve a la principal
+                finish()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
                 btnPublicar.isEnabled = true
-                btnPublicar.text = "Publicar Mascota"
+                btnPublicar.text = "Publicar mascota"
             }
     }
 }
