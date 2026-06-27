@@ -121,8 +121,9 @@ usuarios/
 
 ---
 
+
 ## Autor
 
-**Diana Michelle Barrantes Gallardo**
+**Diana Michelle Barrantes Gallardo y Parra Franco David Jesús**
 Ingeniería en Ciberseguridad — Saint Leo University
 Curso: COM-437ES-AV01 Desarrollo de Aplicaciones Móviles · 2026
