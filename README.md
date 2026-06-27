@@ -121,6 +121,12 @@ usuarios/
 
 ---
 
+## ¿Cómo encontrar PetConnect?
+- **Este se podrá encontrar mediante dos métodos, gracias a un link directo a la APK y al QR que aparecerá a continuación**
+- **Link: https://drive.google.com/file/d/1TWH5J5GW4W7XQLrWwF4XIXVbrY35_10r/view?usp=sharing**
+
+![image alt](https://github.com/dm-barr/PetConnect/blob/298c3d88b6f1be896aa8a905e2ef6f74abda451e/QR%20del%20proyecto.jpeg)
+
 
 ## Autor
 
